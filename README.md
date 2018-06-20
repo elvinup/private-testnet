@@ -7,7 +7,7 @@ is demonstrated.
 
 The example was executed on Ubuntu 16.04 x64 using Loki 0.28.1.
 Instructions on how to compile loki are avaliable here:
-[compile-loki-09-on-ubuntu](https://github.com/lokiexamples/compile-loki-09-on-ubuntu).
+[compile-loki-on-ubuntu](https://github.com/loki-project/loki).
 
 ## Testnet network
 
@@ -16,12 +16,7 @@ and a corresponding wallet on a single computer. The three testnet nodes will be
 at the following ports 28080, 38080 and 48080, respectively.
 
 
-The example is based on the following reddit posts:
- - [How do I make my own testnet network, with e.g. two private nodes and private blockchain?](https://www.reddit.com/r/loki/comments/3x5qwo/how_do_i_make_my_own_testnet_network_with_eg_two/)
- - [Does unlocking balance in testnet mode differers from the normal mode?](https://www.reddit.com/r/loki/comments/3xj9vp/does_unlocking_balance_in_testnet_mode_differers/)
-
-Also much thanks go to reddit's user [o--sensei](https://www.reddit.com/user/o--sensei) for
-  help with setting up the initial testnet network.
+This post is a fork from moneroexamples's repo with updates for loki. 
 
 ## Step 1: Create testnet wallets
 
