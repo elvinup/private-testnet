@@ -1,24 +1,24 @@
-# Setting private Monero testnet network
+# Setting private Loki testnet network
 
-Having private [Monero](https://getmonero.org/) testnet network can be very useful, as you can play around
-with Monero without risking making expensive mistakes on real network. However,
+Having private [Loki](https://getloki.org/) testnet network can be very useful, as you can play around
+with loki without risking making expensive mistakes on real network. However,
 it is not clear how to set up a private testnet network. In this example, this
 is demonstrated.
 
-The example was executed on Xubuntu 16.04 x64 using Monero 0.10.1.
-Instructions on how to compile Monero are avaliable here:
-[compile-monero-09-on-ubuntu](https://github.com/moneroexamples/compile-monero-09-on-ubuntu).
+The example was executed on Ubuntu 16.04 x64 using Loki 0.28.1.
+Instructions on how to compile loki are avaliable here:
+[compile-loki-09-on-ubuntu](https://github.com/lokiexamples/compile-loki-09-on-ubuntu).
 
 ## Testnet network
 
-The testnet Monero network will include 3 nodes, each with its own blockchain database
+The testnet loki network will include 3 nodes, each with its own blockchain database
 and a corresponding wallet on a single computer. The three testnet nodes will be listening
 at the following ports 28080, 38080 and 48080, respectively.
 
 
 The example is based on the following reddit posts:
- - [How do I make my own testnet network, with e.g. two private nodes and private blockchain?](https://www.reddit.com/r/Monero/comments/3x5qwo/how_do_i_make_my_own_testnet_network_with_eg_two/)
- - [Does unlocking balance in testnet mode differers from the normal mode?](https://www.reddit.com/r/Monero/comments/3xj9vp/does_unlocking_balance_in_testnet_mode_differers/)
+ - [How do I make my own testnet network, with e.g. two private nodes and private blockchain?](https://www.reddit.com/r/loki/comments/3x5qwo/how_do_i_make_my_own_testnet_network_with_eg_two/)
+ - [Does unlocking balance in testnet mode differers from the normal mode?](https://www.reddit.com/r/loki/comments/3xj9vp/does_unlocking_balance_in_testnet_mode_differers/)
 
 Also much thanks go to reddit's user [o--sensei](https://www.reddit.com/user/o--sensei) for
   help with setting up the initial testnet network.
@@ -43,7 +43,7 @@ Execute the following commands to create three wallets without password.
 
 **For wallet_01.bin:**
 ```bash
-/opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file ~/testnet/wallet_01.log;
+./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file ~/testnet/wallet_01.log;
 ```
 
 Resulting address and seed:
@@ -56,9 +56,9 @@ sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different
 
 
 The command creates a deterministic wallet and exits after its created. The reason for exit is
-that `monero-wallet-cli` may crash if the blockchain is empty.
+that `loki-wallet-cli` may crash if the blockchain is empty.
 
-The `monero-wallet-cli` options are:
+The `loki-wallet-cli` options are:
 
  - *testnet*   - Used to deploy testnets. The daemon must be launched with --testnet flag.
  - *generate-new-wallet*    - Generate new wallet and save it to <arg> or <address>.wallet by default.
@@ -69,7 +69,7 @@ The `monero-wallet-cli` options are:
 
 **For wallet_02.bin:**
 ```bash
-/opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_02.bin  --restore-deterministic-wallet --electrum-seed="deftly large tirade gumball android leech sidekick opened iguana voice gels focus poaching itches network espionage much jailed vaults winter oatmeal eleven science siren winter" --password "" --log-file ~/testnet/wallet_02.log;
+/loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_02.bin  --restore-deterministic-wallet --electrum-seed="deftly large tirade gumball android leech sidekick opened iguana voice gels focus poaching itches network espionage much jailed vaults winter oatmeal eleven science siren winter" --password "" --log-file ~/testnet/wallet_02.log;
 ```
 
 Resulting address and seed:
@@ -82,7 +82,7 @@ deftly large tirade gumball android leech sidekick opened iguana voice gels focu
 
 **For wallet_03.bin:**
 ```bash
-/opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_03.bin  --restore-deterministic-wallet --electrum-seed="upstairs arsenic adjust emulate karate efficient demonstrate weekday kangaroo yoga huts seventh goes heron sleepless fungal tweezers zigzags maps hedgehog hoax foyer jury knife karate" --password "" --log-file ~/testnet/wallet_03.log;
+./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_03.bin  --restore-deterministic-wallet --electrum-seed="upstairs arsenic adjust emulate karate efficient demonstrate weekday kangaroo yoga huts seventh goes heron sleepless fungal tweezers zigzags maps hedgehog hoax foyer jury knife karate" --password "" --log-file ~/testnet/wallet_03.log;
 ```
 
 Resulting address and seed:
@@ -98,10 +98,10 @@ upstairs arsenic adjust emulate karate efficient demonstrate weekday kangaroo yo
 The node will listen for connections at port 28080 and connect to the two other nodes, i.e., those on ports 38080 and 48080. It will store its blockchain in `~/testnet/node_01`.
 
 ```bash
-/opt/monero/monerod --testnet  --no-igd --hide-my-port --testnet-data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 0 --add-exclusive-node 127.0.0.1:38080 --add-exclusive-node 127.0.0.1:48080
+./lokid --testnet  --no-igd --hide-my-port --data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 0 --add-exclusive-node 127.0.0.1:38080 --add-exclusive-node 127.0.0.1:48080
 ```
 
-The `monerod` options are:
+The `lokid` options are:
 
  - *testnet*   - Run on testnet. The wallet must be launched with --testnet flag.
  - *no-igd*    - Disable UPnP port mapping.
@@ -116,13 +116,13 @@ The `monerod` options are:
 The node will listen for connections at port 38080 and connect to the two other nodes, i.e., those on ports 28080 and 48080. It will store its blockchain in `~/testnet/node_02`.
 
 ```bash
-/opt/monero/monerod --testnet --testnet-p2p-bind-port 38080 --testnet-rpc-bind-port 38081 --zmq-testnet-rpc-bind-port 38082 --no-igd --hide-my-port  --log-level 0 --testnet-data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:48080
+./lokid --testnet --p2p-bind-port 38080 --rpc-bind-port 38081 --zmq-rpc-bind-port 38082 --no-igd --hide-my-port  --log-level 0 --data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:48080
 ```
 
-Additional `monerod` options are:
+Additional `lokid` options are:
 
- - *testnet-p2p-bind-port* - Port for testnet p2p network protocol.
- - *testnet-rpc-bind-port* - Port for testnet RPC server.    
+ - *p2p-bind-port* - Port for testnet p2p network protocol.
+ - *rpc-bind-port* - Port for testnet RPC server.    
 
 
 ## Step 4: Start third node
@@ -131,7 +131,7 @@ The node will listen for connections at port 48080 and connect to the two other 
 
 
 ```bash
-/opt/monero/monerod --testnet --testnet-p2p-bind-port 48080 --testnet-rpc-bind-port 48081 --zmq-testnet-rpc-bind-port 48082 --no-igd --hide-my-port  --log-level 0 --testnet-data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:38080
+./lokid --t 48082 --no-igd --hide-my-port  --log-level 0 --data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:38080
 ```
 
 ## Step 5: Start mining
@@ -165,47 +165,47 @@ through transfers, from the remaining wallets.
 
 wallet_01:
 ```
-/opt/monero/monero-wallet-cli --testnet --trusted-daemon --wallet-file ~/testnet/wallet_01.bin --password "" --log-file ~/testnet/wallet_01.log
+./loki-wallet-cli --testnet --trusted-daemon --wallet-file ~/testnet/wallet_01.bin --password "" --log-file ~/testnet/wallet_01.log
 ```
 
 wallet_02:
 ```
-/opt/monero/monero-wallet-cli --testnet --daemon-port 38081 --trusted-daemon --wallet-file ~/testnet/wallet_02.bin --password "" --log-file ~/testnet/wallet_02.log
+./loki-wallet-cli --testnet --daemon-port 38081 --trusted-daemon --wallet-file ~/testnet/wallet_02.bin --password "" --log-file ~/testnet/wallet_02.log
 ```
 
 wallet_03:
 ```
-/opt/monero/monero-wallet-cli --testnet --daemon-port 48081 --trusted-daemon --wallet-file ~/testnet/wallet_03.bin --password "" --log-file ~/testnet/wallet_03.log
+./loki-wallet-cli --testnet --daemon-port 48081 --trusted-daemon --wallet-file ~/testnet/wallet_03.bin --password "" --log-file ~/testnet/wallet_03.log
 ```
 ## Commands' aliases
 The comments used are rather long, so to speed things up, one can make aliases
 for them. For example, by adding the following to `~/.bashrc`:
 
 ```bash
-alias testmakewallet1='echo "exit" | /opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file ~/testnet/wallet_01.log;  echo ""'
+alias testmakewallet1='echo "exit" | ./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file ~/testnet/wallet_01.log;  echo ""'
 
-alias testmakewallet2='echo "exit" | /opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_02.bin  --restore-deterministic-wallet --electrum-seed="deftly large tirade gumball android leech sidekick opened iguana voice gels focus poaching itches network espionage much jailed vaults winter oatmeal eleven science siren winter" --password "" --log-file ~/testnet/wallet_02.log;  echo ""'
+alias testmakewallet2='echo "exit" | ./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_02.bin  --restore-deterministic-wallet --electrum-seed="deftly large tirade gumball android leech sidekick opened iguana voice gels focus poaching itches network espionage much jailed vaults winter oatmeal eleven science siren winter" --password "" --log-file ~/testnet/wallet_02.log;  echo ""'
 
-alias testmakewallet3='echo "exit" | /opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_03.bin  --restore-deterministic-wallet --electrum-seed="upstairs arsenic adjust emulate karate efficient demonstrate weekday kangaroo yoga huts seventh goes heron sleepless fungal tweezers zigzags maps hedgehog hoax foyer jury knife karate" --password "" --log-file ~/testnet/wallet_03.log;  echo ""'
+alias testmakewallet3='echo "exit" | ./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_03.bin  --restore-deterministic-wallet --electrum-seed="upstairs arsenic adjust emulate karate efficient demonstrate weekday kangaroo yoga huts seventh goes heron sleepless fungal tweezers zigzags maps hedgehog hoax foyer jury knife karate" --password "" --log-file ~/testnet/wallet_03.log;  echo ""'
 
 # additional alias for making random wallet_04
-alias testmakewallet4='{ echo "0"; echo "exit"; } | /opt/monero/monero-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_04.bin   --password "" --log-file ~/testnet/wallet_04.log;  echo ""'
+alias testmakewallet4='{ echo "0"; echo "exit"; } | ./loki-wallet-cli --testnet --generate-new-wallet ~/testnet/wallet_04.bin   --password "" --log-file ~/testnet/wallet_04.log;  echo ""'
 
 alias testmakeallwallets="testmakewallet1; testmakewallet2; testmakewallet3; testmakewallet4"
 
-alias testnode1="/opt/monero/monerod --testnet --no-igd --hide-my-port --testnet-data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 0 --add-exclusive-node 127.0.0.1:38080 --add-exclusive-node 127.0.0.1:48080"
+alias testnode1="/opt/loki/lokid --testnet --no-igd --hide-my-port --data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 0 --add-exclusive-node 127.0.0.1.add-exclusive-node 127.0.0.1:48080"
 
-alias testnode2="/opt/monero/monerod --testnet --testnet-p2p-bind-port 38080 --testnet-rpc-bind-port 38081 --no-igd --hide-my-port  --log-level 0 --testnet-data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:48080"
+alias testnode2="/opt/loki/lokid --t 38081 --no-igd --hide-my-port  --log-level 0 --data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1.add-exclusive-node 127.0.0.1:48080"
 
-alias testnode3="/opt/monero/monerod --testnet --testnet-p2p-bind-port 48080 --testnet-rpc-bind-port 48081 --no-igd --hide-my-port  --log-level 0 --testnet-data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:38080"
+alias testnode3="/opt/loki/lokid --t 48081 --no-igd --hide-my-port  --log-level 0 --data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1.add-exclusive-node 127.0.0.1:38080"
 
-alias teststartwallet1='/opt/monero/monero-wallet-cli --testnet --trusted-daemon --wallet-file ~/testnet/wallet_01.bin --password "" --log-file ~/testnet/wallet_01.log'
+alias teststartwallet1='./loki-wallet-cli --testnet --trusted-daemon --wallet-file ~/testnet/wallet_01.bin --password "" --log-file ~/testnet/wallet_01.log'
 
-alias teststartwallet2='/opt/monero/monero-wallet-cli --testnet --daemon-port 38081 --trusted-daemon --wallet-file ~/testnet/wallet_02.bin --password "" --log-file ~/testnet/wallet_02.log'
+alias teststartwallet2='./loki-wallet-cli --testnet --daemon-port 38081 --trusted-daemon --wallet-file ~/testnet/wallet_02.bin --password "" --log-file ~/testnet/wallet_02.log'
 
-alias teststartwallet3='/opt/monero/monero-wallet-cli --testnet --daemon-port 48081 --trusted-daemon --wallet-file ~/testnet/wallet_03.bin --password "" --log-file ~/testnet/wallet_03.log'
+alias teststartwallet3='./loki-wallet-cli --testnet --daemon-port 48081 --trusted-daemon --wallet-file ~/testnet/wallet_03.bin --password "" --log-file ~/testnet/wallet_03.log'
 
-alias teststartwallet4='/opt/monero/monero-wallet-cli --testnet --daemon-port 48081 --wallet-file ~/testnet/wallet_04.bin --password "" --log-file ~/testnet/wallet_04.log'
+alias teststartwallet4='./loki-wallet-cli --testnet --daemon-port 48081 --wallet-file ~/testnet/wallet_04.bin --password "" --log-file ~/testnet/wallet_04.log'
 
 alias testremove="rm -rvf ~/testnet"
 
@@ -218,17 +218,17 @@ The resulting `~/testnet` folder structure should be as follows:
 ```bash
 ./testnet/
 ├── node_01
-│   ├── bitmonero.log
+│   ├── bitloki.log
 │   └── lmdb
 │       ├── data.mdb
 │       └── lock.mdb
 ├── node_02
-│   ├── bitmonero.log
+│   ├── bitloki.log
 │   └── lmdb
 │       ├── data.mdb
 │       └── lock.mdb
 ├── node_03
-│   ├── bitmonero.log
+│   ├── bitloki.log
 │   └── lmdb
 │       ├── data.mdb
 │       └── lock.mdb
@@ -258,17 +258,17 @@ For example, to start the three nodes so that they mine into the first two walle
 
 in node_01 (mining to the first wallet):
 ```bash
-/opt/monero/monerod --testnet --no-igd --hide-my-port --testnet-data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 1 --add-exclusive-node 127.0.0.1:38080 --add-exclusive-node 127.0.0.1:48080 --start-mining 9wviCeWe2D8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPwq9Gm8 --mining-threads 1
+./lokid --testnet --no-igd --hide-my-port --data-dir ~/testnet/node_01 --p2p-bind-ip 127.0.0.1 --log-level 1 --add-exclusive-node 127.0.0.1:38080 --add-exclusive-node 127.0.0.1:48080 --start-mining 9wviCeWe2D8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPwq9Gm8 --mining-threads 1
 ```
 
 in node_02 (mining to the second wallet):
 ```bash
-/opt/monero/monerod --testnet --testnet-p2p-bind-port 38080 --testnet-rpc-bind-port 38081 --no-igd --hide-my-port  --log-level 1 --testnet-data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:48080 --start-mining 9wq792k9sxVZiLn66S3Qzv8QfmtcwkdXgM5cWGsXAPxoQeMQ79md51PLPCijvzk1iHbuHi91pws5B7iajTX9KTtJ4bh2tCh --mining-threads 1
+./lokid --t 38081 --no-igd --hide-my-port  --log-level 1 --data-dir ~/testnet/node_02 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:48080 --start-mining 9wq792k9sxVZiLn66S3Qzv8QfmtcwkdXgM5cWGsXAPxoQeMQ79md51PLPCijvzk1iHbuHi91pws5B7iajTX9KTtJ4bh2tCh --mining-threads 1
 ```
 
 in node_03 (mining to the first wallet as well):
 ```bash
-/opt/monero/monerod --testnet --testnet-p2p-bind-port 48080 --testnet-rpc-bind-port 48081 --no-igd --hide-my-port  --log-level 1 --testnet-data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:38080 --start-mining 9wviCeWe2D8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPwq9Gm8 --mining-threads 1
+./lokid --t 48081 --no-igd --hide-my-port  --log-level 1 --data-dir ~/testnet/node_03 --p2p-bind-ip 127.0.0.1 --add-exclusive-node 127.0.0.1:28080 --add-exclusive-node 127.0.0.1:38080 --start-mining 9wviCeWe2D8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPwq9Gm8 --mining-threads 1
 ```
 
 ## Making transfers
@@ -278,20 +278,20 @@ Newly mined blocks require confirmation of 60 blocks, before they can be used. S
 ## Example screenshots
 
 **Commands used to start the nodes and wallets:**
-![Before](https://raw.githubusercontent.com/moneroexamples/private-testnet/master/img/testnet_setup.jpg)
+![Before](https://raw.githubusercontent.com/lokiexamples/private-testnet/master/img/testnet_setup.jpg)
 The above image shows the command used for each node (left column) and wallets (right column).
 Each row represents one node with the corresponding wallet.
 
 
 **After mining first few blocks:**
-![After](https://raw.githubusercontent.com/moneroexamples/private-testnet/master/img/testnet_run.jpg)
+![After](https://raw.githubusercontent.com/lokiexamples/private-testnet/master/img/testnet_run.jpg)
 The above image shows the state of the nodes and wallets after first few blocks mined. We see
 that the first two wallets already have some xmr, but their `unlocked balance` values are zero. For them
 to unlock the mined xmr, we need to mine at least 60 blocks.
 
 
 **After mining more than 60 blocks:**
-![After60](https://raw.githubusercontent.com/moneroexamples/private-testnet/master/img/testnet_run_60.jpg)
+![After60](https://raw.githubusercontent.com/lokiexamples/private-testnet/master/img/testnet_run_60.jpg)
 After mining more than 60 blocks, the `unlocked balance` is no longer zero
 and we can start mining transfers between wallets.
 
